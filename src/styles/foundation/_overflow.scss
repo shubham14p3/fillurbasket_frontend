@@ -1,0 +1,7 @@
+@each $overflow in overflow, overflow-x, overflow-y {
+  @each $value in visible, hidden, scroll, auto {
+    .#{$overflow}-#{$value} {
+      #{$overflow}: $value;
+    }
+  }
+}

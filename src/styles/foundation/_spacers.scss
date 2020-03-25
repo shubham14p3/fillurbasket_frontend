@@ -1,0 +1,51 @@
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: (
+    $spacer * 0.25
+  ),
+  2: (
+    $spacer * 0.5
+  ),
+  3: $spacer,
+  4: (
+    $spacer * 1.5
+  ),
+  5: (
+    $spacer * 3
+  ),
+  auto: auto
+) !default;
+
+@each $prop, $abbr in (margin: m, padding: p) {
+  @each $size, $length in $spacers {
+    @each $direct,
+      $direct-abbr
+        in ("": "", top: t, right: r, bottom: b, left: l, x: "", y: "")
+    {
+      @if $direct == "" {
+        $direct: "";
+      } @else {
+        $direct: -#{$direct};
+      }
+
+      @if $direct == "-x" {
+        $direct: str_slice($direct, 2);
+        .#{$abbr}#{$direct}-#{$size} {
+          #{$prop}-left: $length !important;
+          #{$prop}-right: $length !important;
+        }
+      } @else if $direct == "-y" {
+        $direct: str_slice($direct, 2);
+        .#{$abbr}#{$direct}-#{$size} {
+          #{$prop}-top: $length !important;
+          #{$prop}-bottom: $length !important;
+        }
+      } @else {
+        .#{$abbr}#{$direct-abbr}-#{$size} {
+          #{$prop}#{$direct}: $length !important;
+        }
+      }
+    }
+  }
+}

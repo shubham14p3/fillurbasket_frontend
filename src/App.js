@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { simpleAction } from "./actions/simpleAction";
+import "./App.scss";
+import Home from "./components/Home";
+import Profile from "./components/Profile/Profile";
+import Routes from "./Routes";
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  simpleAction = event => {
+    this.props.simpleAction();
+  };
+  render() {
+    return (
+      <Fragment>
+        {/* <button onClick={this.simpleAction}>Test redux action</button>
+          <pre>{JSON.stringify(this.props)}</pre>
+          <h1 className="float-centre">Hello Team !</h1> */}
+        <Routes />
+      </Fragment>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+  simpleAction: () => dispatch(simpleAction())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
